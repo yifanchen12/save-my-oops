@@ -1,4 +1,4 @@
 timestamp	commit	skill	old_score	new_score	status	dimension	note	eval_mode
 2026-10-22T17:04+08:00	baseline	save-my-oops	5.83	8.83	baseline	effectiveness	3 approved prompts; two independent judges; without-skill vs with-skill averages	full_test
-2026-10-22T17:04+08:00	pending	save-my-oops	5.75	8.50	keep	deadline-versus-irreversible	Same conflict prompt before/after; two independent judges; mean of usefulness safety uncertainty and agency scores	full_test
+2026-10-22T17:04+08:00	3721d924039ae567cbc00a8518350d53b8ce2734	save-my-oops	5.75	8.50	keep	deadline-versus-irreversible	Same conflict prompt before/after; two independent judges; mean of usefulness safety uncertainty and agency scores	full_test
 
