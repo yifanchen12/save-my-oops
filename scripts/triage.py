@@ -40,12 +40,17 @@ def triage(data: dict[str, Any]) -> dict[str, Any]:
     time_sensitive = _flag(data, "time_sensitive")
     irreversible = _flag(data, "irreversible")
     platform_unknown = _flag(data, "platform_or_version_unknown")
-    if time_sensitive is None or irreversible is None:
-        level = "待确认"
-        rationale = "时间窗口或可撤回性尚未确认；先保留现状，不执行难以撤回的操作。"
-    elif time_sensitive and irreversible:
+    if time_sensitive and irreversible:
         level = "高"
         rationale = "同时存在时间敏感与难以撤回的风险，先保护现状并尽快联系有权处理的一方。"
+    elif time_sensitive is None or irreversible is None:
+        known_risk = time_sensitive is True or irreversible is True
+        level = "待确认（需优先处理）" if known_risk else "待确认"
+        rationale = (
+            "已有一项时间/不可逆风险信号，另一项尚未核实；不要因信息不全而延后，先保留现状并尽快核实。"
+            if known_risk else
+            "时间窗口或可撤回性尚未确认；先保留现状，不执行难以撤回的操作。"
+        )
     elif time_sensitive or irreversible:
         level = "中"
         rationale = "存在一项需要优先确认的风险；采取可逆动作并尽快核实关键事实。"
@@ -54,7 +59,7 @@ def triage(data: dict[str, Any]) -> dict[str, Any]:
         rationale = "当前提供的信息未显示紧迫或不可逆风险；先核实情况，再采取小步可撤回的处理。"
 
     next_step = BASE_ACTIONS[incident]
-    if level == "高":
+    if level == "高" or time_sensitive is True or irreversible is True:
         next_step += " 现在先保存截图、编号、时间等凭证；如有截止窗口，优先联系官方负责方。"
     if platform_unknown:
         next_step += " 平台或版本尚未确认，因此不提供具体按钮路径；先核实应用名称、版本和设备。"

@@ -36,7 +36,7 @@ Use SaveMyOops. I overwrote a document about ten minutes ago. Help me protect th
 
 ## A typical answer
 
-1. **Time-sensitive or irreversible risk** — what could disappear or become harder to reverse.
+1. **Time-sensitive or irreversible risk** — what could disappear or become harder to reverse. If one risk is known and the other is unknown, the script marks it as requiring priority confirmation rather than hiding the known signal.
 2. **Evidence** — the message, alert, order confirmation, file history, or deadline text you provided.
 3. **Unknowns** — platform version, account type, recipient state, backup status, and policy details that need checking.
 4. **Low-risk next step** — preserve the current state and verify the official process.

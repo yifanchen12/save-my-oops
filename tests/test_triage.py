@@ -33,6 +33,16 @@ class TriageTests(unittest.TestCase):
         self.assertEqual(result["risk_level"], "待确认")
         self.assertIsNone(result["time_sensitive"])
 
+    def test_known_deadline_signal_is_not_downgraded_by_unknown_reversibility(self):
+        result = triage_module.triage({"incident": "order_error", "time_sensitive": True, "irreversible": None})
+        self.assertEqual(result["risk_level"], "待确认（需优先处理）")
+        self.assertIn("优先联系官方负责方", result["first_step"])
+
+    def test_known_irreversible_signal_is_not_downgraded_by_unknown_deadline(self):
+        result = triage_module.triage({"incident": "file_overwritten", "time_sensitive": None, "irreversible": True})
+        self.assertEqual(result["risk_level"], "待确认（需优先处理）")
+        self.assertIn("保存截图", result["first_step"])
+
     def test_explicit_no_risk_flags_are_low(self):
         result = triage_module.triage({"incident": "unknown", "time_sensitive": False, "irreversible": False})
         self.assertEqual(result["risk_level"], "低")
